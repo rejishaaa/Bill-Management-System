@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg-main: #0f172a;
+  --bg-panel: #020617;
+  --bg-soft: #1e293b;
+
+  --primary: #38bdf8;
+  --primary-soft: #7dd3fc;
+
+  --text-main: #e5e7eb;
+  --text-muted: #cbd5f5;
+
+  --radius-lg: 16px;
+  --radius-md: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ================= GLOBAL ================= */
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ================= AUTH (LOGIN / REGISTER) ================= */
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-panel);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 26px;
+  font-weight: 600;
+  color: var(--primary-soft);
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--bg-soft);
+  color: var(--text-main);
+  font-size: 14px;
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+input:focus, select:focus {
+  outline: 2px solid var(--primary);
+}
+
+button {
+  width: 100%;
+  background: var(--primary);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  color: #020617;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(56,189,248,0.4);
+}
+
+.msg-error {
+  background: #3f1d1d;
+  color: #fca5a5;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.msg-success {
+  background: #064e3b;
+  color: #6ee7b7;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.link a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ================= ADMIN LAYOUT ================= */
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+/* ===== AUTH PAGE LAYOUT FIX ===== */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  background: var(--bg-panel);
+  padding: 24px;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 24px;
+  color: var(--primary);
+}
+
+.nav a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: 0.2s ease;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: var(--bg-soft);
+  color: var(--primary-soft);
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  padding: 32px;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: var(--bg-panel);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--primary-soft);
+  font-weight: 600;
+}
+
+/* ================= TABLE ================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--bg-soft);
+}
+
+th {
+  color: var(--primary-soft);
+  font-weight: 500;
+}
+
+tr:hover td {
+  background: rgba(30,41,59,0.6);
+}
+
+form button {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.nav a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+
+.nav a.active {
+  background-color: #4f46e5; /* Indigo highlight */
+  color: white;
+  font-weight: bold;
+}
