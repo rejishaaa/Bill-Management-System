@@ -1,0 +1,112 @@
+CREATE DATABASE billing_db;
+
+USE billing_db;
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  price DECIMAL(10,2)
+);
+
+
+CREATE TABLE bill_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  bill_id INT,
+  product_id INT,
+  qty INT,
+  price DECIMAL(10,2),
+  FOREIGN KEY (bill_id) REFERENCES bills(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE,
+  password VARCHAR(255),
+  role ENUM('admin','cashier')
+);
+
+CREATE TABLE bills (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_name VARCHAR(100),
+  payment_method VARCHAR(50),
+  total DECIMAL(10,2),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE users ADD fullname VARCHAR(100) AFTER id;
+
+ALTER TABLE users ADD status ENUM('pending','approved') DEFAULT 'pending';
+
+INSERT INTO users (fullname, username, password, role, status)
+VALUES ('$fullname','$username','$hash','$role','pending')
+
+CREATE TABLE customers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  phone VARCHAR(20)
+);
+
+CREATE TABLE suppliers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  company VARCHAR(100)
+);
+
+ALTER TABLE suppliers
+ADD contact VARCHAR(20) NULL AFTER company;
+
+
+SELECT customer_name, payment_method, total, created_at FROM bills;
+
+INSERT INTO users (username, password, role) 
+VALUES ('rejisha', MD5('1234567890'), 'admin');
+
+
+CREATE TABLE sales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    total DECIMAL(10,2),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE sale_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sale_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (sale_id) REFERENCES sales(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+SELECT DATE(created_at) as day,
+COUNT(*) as bills,
+SUM(total) as revenue
+FROM sales
+GROUP BY day;
+
+ALTER TABLE products ADD COLUMN stock INT DEFAULT 0;
+
+ALTER TABLE bills
+ADD payment_status ENUM('pending','paid') DEFAULT 'pending',
+ADD transaction_id VARCHAR(100) NULL;
+
+SELECT DATE(created_at), SUM(total)
+FROM bills
+WHERE payment_status='paid'
+GROUP BY DATE(created_at);
+
+ALTER TABLE bills
+ADD cashier_id INT NOT NULL;
+
+CREATE TABLE bill_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bill_id INT NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    qty INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(id) ON DELETE CASCADE
+);
