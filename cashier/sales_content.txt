@@ -1,0 +1,29 @@
+<?php
+$user_id = (int)$_SESSION['user_id'];
+
+// fetch all bills created by this cashier
+$res = $conn->query("SELECT * FROM bills WHERE cashier_id = $user_id ORDER BY created_at DESC");
+if(!$res) die("SQL ERROR: ".$conn->error);
+?>
+
+<h3>My Sales</h3>
+
+<div class="sales-container" style="display:flex; flex-wrap:wrap; gap:15px;">
+<?php if($res->num_rows == 0): ?>
+    <p>No transactions yet.</p>
+<?php endif; ?>
+
+<?php while($b = $res->fetch_assoc()): ?>
+<div class="card" style="padding:10px; border:1px solid #ccc; border-radius:8px; width:220px;">
+    <p><strong>Customer:</strong> <?= htmlspecialchars($b['customer_name']) ?></p>
+    <p><strong>Total:</strong> Rs. <?= number_format($b['total'],2) ?></p>
+    <p><strong>Status:</strong> <?= strtoupper($b['payment_status']) ?></p>
+    <p><strong>Date:</strong> <?= $b['created_at'] ?></p>
+
+    <a href="print_bill.php?id=<?= $b['id'] ?>" target="_blank"><button>Print</button></a>
+    <a href="delete_transaction.php?id=<?= $b['id'] ?>" onclick="return confirm('Are you sure?')">
+        <button style="background:red; color:white;">Delete</button>
+    </a>
+</div>
+<?php endwhile; ?>
+</div>
